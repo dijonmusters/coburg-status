@@ -15,6 +15,7 @@
 // });
 var http = require('http');
 http.createServer(function (req, res) {
-  res.writeHead(200, {"Content-Type": "text/plain"});
-  res.end("Hello node friend\n");
+  // res.writeHead(200, {"Content-Type": "text/plain"});
+  // res.end("Hello node friend\n");
+  res.sendFile(__dirname + '/index.html');
 }).listen(process.env.PORT);
