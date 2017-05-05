@@ -24,7 +24,7 @@ app.get('/email', function(req, res) {
 });
 
 var ping_all = function(req, res) {
-  var msg = '';
+  var msg = 'PINGED';
   hosts.forEach(function (host) {
     ping.sys.probe(host, function(isAlive) {
       msg += isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
