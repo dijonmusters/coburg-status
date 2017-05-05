@@ -25,10 +25,11 @@ var ping_all = function(req, res) {
   hosts.forEach(function (host) {
     msg += host;
     ping.sys.probe(host, function(isAlive) {
-
+      msg += isAlive;
     });
+  }).then(function() {
+    res.send(msg);
   });
-  res.send(msg);
 }
 
 app.post('/ping_all', ping_all);
