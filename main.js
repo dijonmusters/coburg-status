@@ -4,13 +4,6 @@ var router = express.Router();
 
 var ping = require('ping');
 
-var hosts = [
-  'https://student22.coburg.vic.edu.au',
-  'https://coburg-vic.compass.education/'
-];
-
-
-
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
@@ -24,6 +17,10 @@ app.get('/email', function(req, res) {
 });
 
 var ping_all = function(req, res) {
+  var hosts = [
+    'https://student22.coburg.vic.edu.au',
+    'https://coburg-vic.compass.education/'
+  ];
   var msg = 'PINGED';
   hosts.forEach(function (host) {
     ping.sys.probe(host, function(isAlive) {
