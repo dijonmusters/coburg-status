@@ -10,7 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "^4.15.2",
+    "ping": "^0.2.2"
   },
   "engines": {
     "node": "4.1.1"
