@@ -2,6 +2,10 @@ var express = require('express');
 var app = express();
 var router = express.Router();
 
+const isReachable = require('is-reachable');
+
+
+
 var ping = require('ping');
 
 app.get('/', function (req, res) {
@@ -18,23 +22,22 @@ app.get('/email', function(req, res) {
 
 var ping_all = function(req, res) {
   var hosts = [
-    'https://www.student20.coburg.vic.edu.au',
-    'https://www.student22.coburg.vic.edu.au/wiki',
-    '10.147.252.32'
+    {
+      address: 'student20.coburg.vic.edu.au',
+      status: ''
+    },
+    {
+      address: 'coburg-vic.compass.education',
+      status: ''
+    }
   ];
-  var cfg = {
-    timeout: 1000,
-    // WARNING: -i 2 may not work in other platform like window
-    extra: ["-i 2"],
-  };
-  var msg = '';
   hosts.forEach(function (host) {
-    ping.sys.probe(host, function(isAlive) {
-      msg += isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
-      console.log(msg);
-    }, {extra: ["-i 2"], timeout: false});
+    isReachable(host.address).then(function(reachable) {
+      reachable ? host.status = 'online' : host.status = 'offline';
+      console.log(host.address, ': ', host.status);
+    });
   });
-  res.send(msg);
+  res.send(hosts);
 }
 
 app.post('/ping_all', ping_all);

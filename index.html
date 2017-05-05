@@ -20,7 +20,7 @@
     <script>
       $(document).ready(function() {
         $.post('/ping_all', function(data) {
-          $('#ping_content').empty().append(data);
+          $('#ping_content').empty().append(JSON.stringify(data));
           console.log(data);
         });
       });
