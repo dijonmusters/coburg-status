@@ -27,10 +27,10 @@ var ping_all = function(req, res) {
     // WARNING: -i 2 may not work in other platform like window
     extra: ["-i 2"],
   };
-  var msg = 'PINGED';
+  var msg = '';
   hosts.forEach(function (host) {
     ping.sys.probe(host, function(isAlive) {
-      var msg = isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
+      msg += isAlive ? 'host ' + host + ' is alive' : 'host ' + host + ' is dead';
       console.log(msg);
     }, {extra: ["-i 2"], timeout: false});
   });
@@ -39,10 +39,10 @@ var ping_all = function(req, res) {
 
 app.post('/ping_all', ping_all);
 
-// app.listen(process.env.PORT);
-app.listen(5000, function() {
-  console.log('listening...');
-});
+app.listen(process.env.PORT);
+// app.listen(5000, function() {
+//   console.log('listening...');
+// });
 // var http = require('http');
 // http.createServer(function (req, res) {
 //   // res.writeHead(200, {"Content-Type": "text/plain"});
