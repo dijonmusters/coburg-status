@@ -1,12 +1,33 @@
 <html>
   <head>
     <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' />
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web' rel='stylesheet' />
+    <style>
+      * {
+        font-family: 'Titillium Web', helvetica, sans-serif;
+      }
+      p {
+        font-size: 1.5em;
+      }
+      .online {
+        background-color: #4DB74D;
+        color: #e9e9e9;
+      }
+      .offline {
+        background-color: #E46161;
+        color: #e9e9e9;
+      }
+      .hip-left {
+        padding-left: 8px;
+        border-left: #4DB74D 5px solid;
+      }
+    </style>
   </head>
   <body>
     <div class='container'>
       <div class='row'>
         <div class='col-xs-12'>
-          <h1>Hello Node!<small>Welcome to my Bootstrap website!</small></h1>
+          <h1 class='text-center'><span class='hip-left'>Coburg High School<small>External Status App</small><span></h1>
         </div>
       </div>
       <div class='row'>
@@ -20,7 +41,10 @@
     <script>
       $(document).ready(function() {
         $.post('/ping_all', function(data) {
-          $('#ping_content').empty().append(JSON.stringify(data));
+          $('#ping_content').empty();
+          $.each(data, function(i, val) {
+            $('#ping_content').append('<p class="text-center ' + val.status + '">' + val.address + ': ' + val.status + '</p>');
+          });
           console.log(data);
         });
       });
