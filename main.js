@@ -23,9 +23,8 @@ var ping_all = function(req, res) {
   ];
   var msg = 'PINGED';
   hosts.forEach(function (host) {
-    msg += host;
     ping.sys.probe(host, function(isAlive) {
-      msg += isAlive;
+      msg += 'testing';
     });
   }).then(function() {
     res.send(msg);
