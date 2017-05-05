@@ -26,7 +26,7 @@ var ping_all = function(req, res) {
     ping.sys.probe(host, function(isAlive) {
       msg += 'testing';
     });
-  }).then(function() {
+  }).then(function(msg) {
     res.send(msg);
   });
 }
