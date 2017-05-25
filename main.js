@@ -6,6 +6,8 @@ const isReachable = require('is-reachable');
 
 const isUp = require('is-up');
 
+const isItUp = require('is-it-up');
+
 var ping = require('ping');
 
 app.get('/', function (req, res) {
@@ -33,15 +35,11 @@ var ping_all = function(req, res) {
     {
       address: '7subjects.coburg.vic.edu.au',
       status: ''
-    },
-    {
-      address: 'coburg-vic.compass.education',
-      status: ''
     }
   ];
   var i = 0;
   hosts.forEach(function (host) {
-    isUp(host.address).then(function(reachable) {
+    isItUp(host.address).then(function(reachable) {
       reachable ? host.status = 'online' : host.status = 'offline';
       console.log(host.address, ': ', host.status);
       i++;
