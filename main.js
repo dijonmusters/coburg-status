@@ -4,6 +4,8 @@ var router = express.Router();
 
 const isReachable = require('is-reachable');
 
+const isUp = require('is-up');
+
 var ping = require('ping');
 
 app.get('/', function (req, res) {
@@ -25,7 +27,7 @@ var ping_all = function(req, res) {
       status: ''
     },
     {
-      address: 'student22.coburg.vic.edu.au:443',
+      address: 'student22.coburg.vic.edu.au',
       status: ''
     },
     {
@@ -39,7 +41,7 @@ var ping_all = function(req, res) {
   ];
   var i = 0;
   hosts.forEach(function (host) {
-    isReachable(host.address).then(function(reachable) {
+    isUp(host.address).then(function(reachable) {
       reachable ? host.status = 'online' : host.status = 'offline';
       console.log(host.address, ': ', host.status);
       i++;
