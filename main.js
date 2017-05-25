@@ -4,8 +4,6 @@ var router = express.Router();
 
 const isReachable = require('is-reachable');
 
-
-
 var ping = require('ping');
 
 app.get('/', function (req, res) {
@@ -27,7 +25,7 @@ var ping_all = function(req, res) {
       status: ''
     },
     {
-      address: 'student22.coburg.vic.edu.au',
+      address: 'https://student22.coburg.vic.edu.au',
       status: ''
     },
     {
@@ -55,7 +53,15 @@ var ping_all = function(req, res) {
 
 app.post('/ping_all', ping_all);
 
-app.listen(process.env.PORT);
+if (process.env.PORT) {
+  app.listen(process.env.PORT);
+} else {
+  app.listen(5000, function() {
+    console.log('listening...');
+  });
+}
+
+
 // app.listen(5000, function() {
 //   console.log('listening...');
 // });
