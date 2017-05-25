@@ -35,6 +35,10 @@ var ping_all = function(req, res) {
     {
       address: '7subjects.coburg.vic.edu.au',
       status: ''
+    },
+    {
+      address: 'community.coburg.vic.edu.au',
+      status: ''
     }
   ];
   var i = 0;
