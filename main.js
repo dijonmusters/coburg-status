@@ -15,6 +15,8 @@ var isOnline = require('node-isonline');
 
 var ping = require('ping');
 
+const https = require('https');
+
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/index.html');
 });
@@ -48,14 +50,34 @@ var ping_all = function(req, res) {
   ];
   var i = 0;
   hosts.forEach(function (host) {
-    isUp(host.address).then(function(reachable) {
-      reachable ? host.status = 'online' : host.status = 'offline';
-      console.log(host.address, ': ', host.status);
+    var options = {
+      hostname :  hosts[0].address,
+      port : 443,
+      path: '/',
+      method : 'GET'
+    };
+    const req = https.request(options, (resp) => {
+      host.status = res.statusCode;
+      // host.status = res;
+      // console.log(host.address, ': ', host.status);
+
       i++;
       if (i === hosts.length) {
         res.send(hosts);
       }
     });
+    // isUp(host.address).then(function(reachable) {
+    //   reachable ? host.status = 'online' : host.status = 'offline';
+    //   console.log(host.address, ': ', host.status);
+    //   i++;
+    //   if (i === hosts.length) {
+    //     res.send(hosts);
+    //   }
+    // });
+    req.on('error', (e) => {
+      console.error('error: ' + e);
+    });
+    req.end();
   });
   // setTimeout(ping_all, 15000);
 }
