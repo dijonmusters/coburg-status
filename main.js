@@ -8,6 +8,11 @@ const isUp = require('is-up');
 
 const isItUp = require('is-it-up');
 
+var
+    assert = require('assert');
+
+var isOnline = require('node-isonline');
+
 var ping = require('ping');
 
 app.get('/', function (req, res) {
@@ -43,7 +48,7 @@ var ping_all = function(req, res) {
   ];
   var i = 0;
   hosts.forEach(function (host) {
-    isItUp(host.address).then(function(reachable) {
+    isUp(host.address).then(function(reachable) {
       reachable ? host.status = 'online' : host.status = 'offline';
       console.log(host.address, ': ', host.status);
       i++;
