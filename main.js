@@ -25,7 +25,7 @@ var ping_all = function(req, res) {
       status: ''
     },
     {
-      address: 'https://student22.coburg.vic.edu.au',
+      address: 'student22.coburg.vic.edu.au:443',
       status: ''
     },
     {
