@@ -1,20 +1,7 @@
 var express = require('express');
 var app = express();
 var router = express.Router();
-
-const isReachable = require('is-reachable');
-
-const isUp = require('is-up');
-
-const isItUp = require('is-it-up');
-
-var
-    assert = require('assert');
-
-var isOnline = require('node-isonline');
-
-var ping = require('ping');
-
+const ping = require('ping');
 const https = require('https');
 
 app.get('/', function (req, res) {
@@ -44,40 +31,59 @@ var ping_all = function(req, res) {
       status: ''
     },
     {
+      address: 'coburg-vic.compass.education',
+      status: ''
+    },
+    {
+      address: 'portal.coburg.vic.edu.au',
+      status: ''
+    },
+    {
       address: 'community.coburg.vic.edu.au',
       status: ''
     }
   ];
+  // var i = 0;
+  // hosts.forEach(function(host) {
+  //   var options = {
+  //     hostname :  host.address,
+  //     port : 443,
+  //     rejectUnauthorized: false,
+  //     path: '/',
+  //     headers: {'Cache-Control':'no-cache', accept: '*/*'}
+  //   };
+  //   https.get(options, function(res) {
+  //     i++;
+  //     if (i === hosts.length) {
+  //       res.send(hosts);
+  //     }
+  //     host.status = res.statusCode;
+  //     console.log(res.statusCode);
+  //   }).on('error', (e) => {
+  //     console.error('error: ' + e);
+  //     host.status = 400;
+  //   });
+  // });
   var i = 0;
   hosts.forEach(function (host) {
     var options = {
-      hostname :  hosts[0].address,
+      hostname :  host.address,
       port : 443,
+      rejectUnauthorized: false,
       path: '/',
-      method : 'GET'
+      headers: {'Cache-Control':'no-cache', accept: '*/*'}
     };
-    const req = https.request(options, (resp) => {
-      host.status = res.statusCode;
-      // host.status = res;
-      // console.log(host.address, ': ', host.status);
-
+    var req = https.get(options, (resp) => {
+      host.status = resp.statusCode;
       i++;
       if (i === hosts.length) {
         res.send(hosts);
       }
-    });
-    // isUp(host.address).then(function(reachable) {
-    //   reachable ? host.status = 'online' : host.status = 'offline';
-    //   console.log(host.address, ': ', host.status);
-    //   i++;
-    //   if (i === hosts.length) {
-    //     res.send(hosts);
-    //   }
-    // });
-    req.on('error', (e) => {
+    }).on('error', (e) => {
       console.error('error: ' + e);
+      host.status = 400;
     });
-    req.end();
+
   });
   // setTimeout(ping_all, 15000);
 }
