@@ -61,7 +61,7 @@ var ping_all = function(req, res) {
       console.log(resp.statusCode);
     });
     req.on('socket', function(socket) {
-      socket.setTimeout(1000);
+      socket.setTimeout(2000);
       socket.on('timeout', function() {
           req.abort();
       });
