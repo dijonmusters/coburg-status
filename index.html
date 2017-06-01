@@ -39,7 +39,7 @@
     <script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>
     <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
     <script>
-      $(document).ready(function() {
+      var fetch_data = function() {
         $.post('/ping_all', function(data) {
           $('#ping_content').empty();
           $.each(data, function(i, val) {
@@ -47,9 +47,11 @@
           });
           console.log(data);
         });
+        setTimeout(fetch_data, 5000);
+      }
+      $(document).ready(function() {
+        fetch_data();
       });
-      // $.get()
-      // $('#email').empty().append()
     </script>
   </body>
 </html>
